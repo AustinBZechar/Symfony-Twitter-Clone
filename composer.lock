@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "c79d4d6580cf0017bd55d7e16b258fde",
+    "hash": "096e4eb6d13381cc5bcbee37dafb625c",
     "packages": [
         {
             "name": "doctrine/annotations",
@@ -955,16 +955,16 @@
         },
         {
             "name": "predis/predis",
-            "version": "0.8.x-dev",
+            "version": "v1.0.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/nrk/predis.git",
-                "reference": "192dfd61e54c3d32c9526bba03365fff818e17e4"
+                "reference": "7a170b3d8123c556597b4fbdb88631f99de180c2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/nrk/predis/zipball/192dfd61e54c3d32c9526bba03365fff818e17e4",
-                "reference": "192dfd61e54c3d32c9526bba03365fff818e17e4",
+                "url": "https://api.github.com/repos/nrk/predis/zipball/7a170b3d8123c556597b4fbdb88631f99de180c2",
+                "reference": "7a170b3d8123c556597b4fbdb88631f99de180c2",
                 "shasum": ""
             },
             "require": {
@@ -979,8 +979,8 @@
             },
             "type": "library",
             "autoload": {
-                "psr-0": {
-                    "Predis": "lib/"
+                "psr-4": {
+                    "Predis\\": "src/"
                 }
             },
             "notification-url": "https://packagist.org/downloads/",
@@ -1001,7 +1001,7 @@
                 "predis",
                 "redis"
             ],
-            "time": "2015-07-07 17:11:00"
+            "time": "2015-01-02 12:51:34"
         },
         {
             "name": "psr/log",
@@ -1728,7 +1728,6 @@
     "aliases": [],
     "minimum-stability": "stable",
     "stability-flags": {
-        "predis/predis": 20,
         "snc/redis-bundle": 20
     },
     "prefer-stable": false,
