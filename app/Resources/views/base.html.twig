@@ -1,15 +1,28 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <meta charset="UTF-8" />
-        <title>{% block title %}Retwis{% endblock %}</title>
+        <meta content="text/html; charset=UTF-8" http-equiv="content-type">
+        <title>{% block title %}Retwis - Example Twitter clone based on the Redis Key-Value DB{% endblock %}</title>
         {% block stylesheets %}
             <link rel="stylesheet" href="{{ asset('css/style.css') }}" />
         {% endblock %}
         <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
     </head>
     <body>
+        <div id="page">
+            <div id="header">
+                <a href="/"><img style="border:none" src="{{ asset('img/logo.png') }}" width="192" height="85" alt="Retwis"></a>
+                <div id="navbar">
+                    <a href="{{ path('index') }}">Home</a>
+                    | <a href="{#TODO time-line route#}">Time-line</a>
+                    {#TODO chheck if logged in#}
+                    | <a href="{#TODO logout route#}">Logout</a>
+                </div>
+            </div>
         {% block body %}{% endblock %}
         {% block javascripts %}{% endblock %}
+        </div>
     </body>
 </html>
+
+<body>
