@@ -9,16 +9,10 @@ use Symfony\Component\HttpFoundation\Request;
 class DefaultController extends Controller
 {
     /**
-     * @Route("/app/example", name="homepage")
+     * @Route("/", name="index")
      */
     public function indexAction()
     {
-        $redis = $this->container->get('snc_redis.default');
-        $incr = $redis->incr('foo:bar');
-        $get = $redis->get('foo:bar');
-        return $this->render('default/index.html.twig', [
-            'incr' => $incr,
-            'get'  => $get,
-        ]);
+        return $this->render('default/index.html.twig');
     }
 }
