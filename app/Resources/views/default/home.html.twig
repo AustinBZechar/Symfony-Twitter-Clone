@@ -1,0 +1,18 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <div id="postform">
+        <form method="POST" action="{#TODO post action#}">
+            {#TODO username here#}, what you are doing?
+            <br>
+            <table>
+                <tr><td><textarea cols="70" rows="3" name="status"></textarea></td></tr>
+                <tr><td align="right"><input type="submit" name="doit" value="Update"></td></tr>
+            </table>
+        </form>
+        <div id="homeinfobox">
+            {#TODO user's followers#} <br>
+            {#TODO user following#} <br>
+        </div>
+    </div>
+{% endblock %}
