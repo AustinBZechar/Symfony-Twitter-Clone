@@ -14,5 +14,6 @@ class RegistrationController extends Controller
      */
     public function registerAction()
     {
+        $this->get('app.redis.redis_registration')->register();
     }
 }
