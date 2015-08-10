@@ -16,7 +16,12 @@ class RegistrationType extends AbstractType
     {
         $builder
             ->add('username')
-            ->add('password', 'repeated');
+            ->add('password', 'repeated', [
+                'type' => 'password',
+                'first_options' => ['label' => 'Password'],
+                'second_options' => ['label' => 'Password (again)'],
+            ])
+            ->add('register', 'submit');
     }
 
     /**

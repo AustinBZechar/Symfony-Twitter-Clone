@@ -10,7 +10,7 @@ class RegistrationTransfer
     private $username;
 
     /**
-     * @var array
+     * @var string
      */
     private $password;
 
@@ -31,7 +31,7 @@ class RegistrationTransfer
     }
 
     /**
-     * @return array
+     * @return string
      */
     public function getPassword()
     {
@@ -39,9 +39,9 @@ class RegistrationTransfer
     }
 
     /**
-     * @param array $password
+     * @param string $password
      */
-    public function setPassword(array $password)
+    public function setPassword($password)
     {
         $this->password = $password;
     }
