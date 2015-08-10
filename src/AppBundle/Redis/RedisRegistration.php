@@ -7,7 +7,7 @@ use Predis\Client;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorage;
 
-class RedisRegister
+class RedisRegistration
 {
     /**
      * @var Client
