@@ -71,6 +71,7 @@ class DefaultController extends Controller
 
     /**
      * @param $authSecret
+     *
      * @return Response
      */
     private function generateCookieResponse($authSecret)
