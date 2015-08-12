@@ -2,9 +2,8 @@
 
 namespace AppBundle\Redis;
 
+use AppBundle\Exception\WrongUsernameOrPasswordException;
 use Predis\Client;
-use Symfony\Component\HttpFoundation\RequestStack;
-use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorage;
 
 class RedisLogin
 {
@@ -14,24 +13,32 @@ class RedisLogin
     private $redisClient;
 
     /**
-     * @var TokenStorage
-     */
-    private $tokenStorage;
-
-    /**
-     * @var RequestStack
-     */
-    private $requestStack;
-
-    /**
      * @param Client $redisClient
-     * @param TokenStorage $tokenStorage
-     * @param RequestStack $requestStack
      */
-    public function __construct(Client $redisClient, TokenStorage $tokenStorage, RequestStack $requestStack)
+    public function __construct(Client $redisClient)
     {
         $this->redisClient = $redisClient;
-        $this->tokenStorage = $tokenStorage;
-        $this->requestStack = $requestStack;
+    }
+
+    /**
+     * @param $username
+     * @param $password
+     *
+     * @throws WrongUsernameOrPasswordException
+     *
+     * @return string
+     */
+    public function login($username, $password)
+    {
+        $userId = $this->redisClient->get("username:$username:id");
+        if (!$userId) {
+            throw new WrongUsernameOrPasswordException('Wrong username or password');
+        }
+        $realPassword = $this->redisClient->get("uid:$userId:password");
+        if ($realPassword != $password) {
+            throw new WrongUsernameOrPasswordException('Wrong username or password');
+        }
+
+        return $this->redisClient->get("uid:$userId:auth");
     }
 }

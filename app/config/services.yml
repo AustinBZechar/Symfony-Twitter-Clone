@@ -3,4 +3,8 @@ parameters:
 services:
   app.redis.redis_registration:
       class: AppBundle\Redis\RedisRegistration
-      arguments: [ @snc_redis.default_client, @security.token_storage, @request_stack ]
+      arguments: [ @snc_redis.default_client ]
+
+  app.redis.redis_login:
+      class: AppBundle\Redis\RedisLogin
+      arguments: [ @snc_redis.default_client ]
