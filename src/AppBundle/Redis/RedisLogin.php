@@ -32,11 +32,11 @@ class RedisLogin
     {
         $userId = $this->redisClient->get("username:$username:id");
         if (!$userId) {
-            throw new WrongUsernameOrPasswordException('Wrong username or password');
+            throw new WrongUsernameOrPasswordException(WrongUsernameOrPasswordException::MESSAGE);
         }
         $realPassword = $this->redisClient->get("uid:$userId:password");
         if ($realPassword != $password) {
-            throw new WrongUsernameOrPasswordException('Wrong username or password');
+            throw new WrongUsernameOrPasswordException(WrongUsernameOrPasswordException::MESSAGE);
         }
 
         return $this->redisClient->get("uid:$userId:auth");

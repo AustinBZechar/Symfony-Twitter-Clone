@@ -45,7 +45,7 @@ class RedisRegistration
     public function register($username, $password)
     {
         if ($this->checkIfUsernameExists($username)) {
-            throw new UsernameExistsException('Username exists');
+            throw new UsernameExistsException(UsernameExistsException::MESSAGE);
         }
         $userId = $this->redisClient->incr("global:nextUserId");
         $this->redisClient->set("username:$username:id", $userId);
