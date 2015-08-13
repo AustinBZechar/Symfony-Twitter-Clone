@@ -8,3 +8,7 @@ services:
   app.redis.redis_login:
       class: AppBundle\Redis\RedisLogin
       arguments: [ @snc_redis.default_client ]
+
+  app.redis.redis_logout:
+  	class: AppBundle\Redis\RedisLogout
+  	arguments: [ @snc_redis.default_client ]

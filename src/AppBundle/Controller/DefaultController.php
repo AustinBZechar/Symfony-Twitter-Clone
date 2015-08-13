@@ -9,6 +9,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Form\Form;
 use Symfony\Component\HttpFoundation\Cookie;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -53,6 +54,22 @@ class DefaultController extends Controller
 
         return $this->render(':default:index.html.twig', [
             'registrationForm' => $registrationForm->createView(),
+        ]);
+    }
+
+    /**
+     * @param Request $request
+     *
+     * @return RedirectResponse
+     *
+     * @Route("/logout", name="logout")
+     */
+    public function logoutAction(Request $request)
+    {
+        $this->get('app.redis.redis_logout')->logout($request->request->get('userId'));
+
+        return $this->redirectToRoute('index', [
+            'request' => $request,
         ]);
     }
 
