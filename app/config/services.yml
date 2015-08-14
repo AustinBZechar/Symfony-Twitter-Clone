@@ -3,12 +3,12 @@ parameters:
 services:
   app.redis.redis_registration:
       class: AppBundle\Redis\RedisRegistration
-      arguments: [ @snc_redis.default_client ]
+      arguments: [ @snc_redis.default_client, @session ]
 
   app.redis.redis_login:
       class: AppBundle\Redis\RedisLogin
-      arguments: [ @snc_redis.default_client ]
+      arguments: [ @snc_redis.default_client, @session ]
 
   app.redis.redis_logout:
       class: AppBundle\Redis\RedisLogout
-      arguments: [ @snc_redis.default_client ]
+      arguments: [ @snc_redis.default_client, @session ]

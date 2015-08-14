@@ -4,6 +4,7 @@ namespace AppBundle\Redis;
 
 use AppBundle\Exception\WrongUsernameOrPasswordException;
 use Predis\Client;
+use Symfony\Component\HttpFoundation\Session\Session;
 
 class RedisLogin
 {
@@ -13,11 +14,18 @@ class RedisLogin
     private $redisClient;
 
     /**
-     * @param Client $redisClient
+     * @var Session
      */
-    public function __construct(Client $redisClient)
+    private $session;
+
+    /**
+     * @param Client $redisClient
+     * @param Session $session
+     */
+    public function __construct(Client $redisClient, Session $session)
     {
         $this->redisClient = $redisClient;
+        $this->session = $session;
     }
 
     /**
@@ -38,6 +46,9 @@ class RedisLogin
         if ($realPassword != $password) {
             throw new WrongUsernameOrPasswordException(WrongUsernameOrPasswordException::MESSAGE);
         }
+
+        $this->session->set('userId', $userId);
+        $this->session->set('username', $username);
 
         return $this->redisClient->get("uid:$userId:auth");
     }

@@ -30,6 +30,10 @@ class DefaultController extends Controller
      */
     public function indexAction(Request $request)
     {
+        if ($this->checkIfLoggedIn()) {
+            return $this->render(':default:home.html.twig');
+        }
+
         $registrationTransferObject = new RegistrationTransfer();
         $registrationForm = $this->initForm($request, new RegistrationType(), $registrationTransferObject);
 
@@ -107,5 +111,19 @@ class DefaultController extends Controller
         $response->headers->setCookie($cookie);
 
         return $response;
+    }
+
+    /**
+     * @return boolean
+     */
+    private function checkIfLoggedIn()
+    {
+        $userId = $this->get('session')->get('userId', null);
+        $username = $this->get('session')->get('username', null);
+        if ($userId !== null && $username !== null) {
+            return true;
+        }
+
+        return false;
     }
 }
