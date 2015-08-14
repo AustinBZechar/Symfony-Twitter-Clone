@@ -10,5 +10,5 @@ services:
       arguments: [ @snc_redis.default_client ]
 
   app.redis.redis_logout:
-  	class: AppBundle\Redis\RedisLogout
-  	arguments: [ @snc_redis.default_client ]
+      class: AppBundle\Redis\RedisLogout
+      arguments: [ @snc_redis.default_client ]
