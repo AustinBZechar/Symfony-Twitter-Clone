@@ -4,15 +4,7 @@
         <b>Want to try Retwis? Create an account!</b>
         {{ form(registrationForm) }}
         <h2>Already registered? Login here</h2>
-        <form method="POST" action="{#TODO add login route#}">
-            <table><tr>
-                    <td>Username</td><td><input type="text" name="username"></td>
-                </tr><tr>
-                    <td>Password</td><td><input type="password" name="password"></td>
-                </tr><tr>
-                    <td colspan="2" align="right"><input type="submit" name="doit" value="Login"></td>
-                </tr></table>
-        </form>
+        {{ form(loginForm) }}
     </div>
     Hello! Retwis is a very simple clone of <a href="http://twitter.com">Twitter</a>, as a demo for the <a href="http://code.google.com/p/redis/">Redis</a> key-value database. Key points:
     <ul>

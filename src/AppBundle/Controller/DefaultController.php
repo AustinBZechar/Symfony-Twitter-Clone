@@ -56,6 +56,7 @@ class DefaultController extends Controller
 
         return $this->render(':default:index.html.twig', [
             'registrationForm' => $registrationForm->createView(),
+            'loginForm'        => $loginForm->createView(),
         ]);
     }
 
