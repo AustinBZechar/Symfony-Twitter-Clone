@@ -2,11 +2,13 @@
 
 namespace AppBundle\Controller;
 
+use AppBundle\Form\LoginType;
 use AppBundle\Form\RegistrationType;
 use AppBundle\Transfer\LoginTransfer;
 use AppBundle\Transfer\RegistrationTransfer;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Form;
 use Symfony\Component\HttpFoundation\Cookie;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -29,10 +31,10 @@ class DefaultController extends Controller
     public function indexAction(Request $request)
     {
         $registrationTransferObject = new RegistrationTransfer();
-        $registrationForm = $this->initForm($request, $registrationTransferObject);
+        $registrationForm = $this->initForm($request, new RegistrationType(), $registrationTransferObject);
 
         $loginTransferObject = new LoginTransfer();
-        $loginForm = $this->initForm($request, $loginTransferObject);
+        $loginForm = $this->initForm($request, new LoginType(), $loginTransferObject);
 
         if ($registrationForm->isSubmitted() && $registrationForm->isValid()) {
             $authSecret = $this->get('app.redis.redis_registration')->register(
@@ -75,13 +77,14 @@ class DefaultController extends Controller
 
     /**
      * @param Request $request
+     * @param AbstractType $formType
      * @param $transferObject
      *
      * @return Form
      */
-    private function initForm(Request $request, $transferObject)
+    private function initForm(Request $request, AbstractType $formType, $transferObject)
     {
-        $form = $this->createForm(new RegistrationType(), $transferObject);
+        $form = $this->createForm($formType, $transferObject);
         $form->handleRequest($request);
         return $form;
     }
