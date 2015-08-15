@@ -67,8 +67,9 @@ class RedisRegistration
         $this->redisClient->set("uid:$userId:auth", $authSecret);
         $this->redisClient->set("auth:$authSecret", $userId);
 
-        // TODO fix this sadd, expects array, got int
-//        $this->redisClient->sadd("global:users", $userId);
+        $this->redisClient->sadd("global:users", [
+            $userId,
+        ]);
         $this->session->set('userId', $userId);
         $this->session->set('username', $username);
 

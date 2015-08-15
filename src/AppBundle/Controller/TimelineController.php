@@ -20,6 +20,7 @@ class TimelineController extends Controller
     {
         return $this->render(':default:timeline.html.twig', [
             'tweets' => $this->get('app.redis.redis_tweet')->showUserPosts(),
+            'lastUsers' => $this->get('app.redis.redis_tweet')->showLastUsers(),
         ]);
     }
 }

@@ -2,7 +2,9 @@
 {% block body %}
     <h2>Timeline</h2>
     <i>Latest registered users (an example of SORT command!)</i><br>
-    {#TODO show last users#}
+    {% for user in lastUsers %}
+        {{ user }} <br>
+    {% endfor %}
     <i>Latest 50 messages from users around the world!</i><br>
     {% for tweet in tweets %}
         {{ tweet }} <br>

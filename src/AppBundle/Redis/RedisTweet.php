@@ -72,4 +72,14 @@ class RedisTweet
 
         return $postData;
     }
+
+    /**
+     * @return array
+     */
+    public function showLastUsers()
+    {
+        return $this->redisClient->sort("global:users", [
+            "GET uid:*:username DESC LIMIT 0 10",
+        ]);
+    }
 }
