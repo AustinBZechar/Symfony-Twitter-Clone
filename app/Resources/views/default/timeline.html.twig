@@ -4,5 +4,7 @@
     <i>Latest registered users (an example of SORT command!)</i><br>
     {#TODO show last users#}
     <i>Latest 50 messages from users around the world!</i><br>
-    {#TODO show user posts#}
+    {% for tweet in tweets %}
+        {{ tweet }} <br>
+    {% endfor %}
 {% endblock %}

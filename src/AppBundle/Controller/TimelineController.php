@@ -18,6 +18,8 @@ class TimelineController extends Controller
      */
     public function timelineAction(Request $request)
     {
-        return $this->render(':default:timeline.html.twig');
+        return $this->render(':default:timeline.html.twig', [
+            'tweets' => $this->get('app.redis.redis_tweet')->showUserPosts(),
+        ]);
     }
 }

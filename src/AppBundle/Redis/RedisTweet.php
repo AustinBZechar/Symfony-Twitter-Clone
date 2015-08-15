@@ -2,7 +2,6 @@
 
 namespace AppBundle\Redis;
 
-use AppBundle\Exception\WrongUsernameOrPasswordException;
 use Predis\Client;
 use Symfony\Component\HttpFoundation\Session\Session;
 
@@ -55,5 +54,22 @@ class RedisTweet
             $postId,
         ]);
         $this->redisClient->ltrim("global:timeline", 0, 1000);
+    }
+
+    /**
+     * @return array
+     */
+    public function showUserPosts()
+    {
+        $userId = $this->session->get('userId');
+        $key = ($userId == -1) ? "global:timeline" : "uid:$userId:posts";
+        // TODO maybe use start & count or do ajax call and increase start and count
+        $posts = $this->redisClient->lrange($key, 0, 10);
+        $postData = [];
+        foreach ($posts as $post) {
+            $postData[] = $this->redisClient->get("post:$post");
+        }
+
+        return $postData;
     }
 }
