@@ -27,7 +27,7 @@ class HomeController extends Controller
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            // TODO
+            $this->get('app.redis.redis_tweet')->tweet($tweetTransferObject->getStatus());
         }
 
         $response = new Response($this->renderView(':default:home.html.twig', [

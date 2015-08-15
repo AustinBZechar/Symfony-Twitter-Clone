@@ -1,0 +1,59 @@
+<?php
+
+namespace AppBundle\Redis;
+
+use AppBundle\Exception\WrongUsernameOrPasswordException;
+use Predis\Client;
+use Symfony\Component\HttpFoundation\Session\Session;
+
+class RedisTweet
+{
+    /**
+     * @var Client
+     */
+    private $redisClient;
+
+    /**
+     * @var Session
+     */
+    private $session;
+
+    /**
+     * @param Client $redisClient
+     * @param Session $session
+     */
+    public function __construct(Client $redisClient, Session $session)
+    {
+        $this->redisClient = $redisClient;
+        $this->session = $session;
+    }
+
+    /**
+     * @param $status
+     */
+    public function tweet($status)
+    {
+        $postId = $this->redisClient->incr("global:nextPostId");
+        $userId = $this->session->get('userId');
+        $post = $userId."|".time()."|".$status;
+        $this->redisClient->set("post:$postId", $post);
+        $followers = $this->redisClient->smembers("uid:".$userId.":followers");
+        if ($followers === false) {
+            $followers = [];
+        }
+
+        $followers[] = $userId; /* Add the post to our own posts too */
+
+        foreach ($followers as $fid) {
+            $this->redisClient->lpush("uid:$fid:posts", [
+                $postId,
+            ]);
+        }
+        # Push the post on the timeline, and trim the timeline to the
+        # newest 1000 elements.
+        $this->redisClient->lpush("global:timeline", [
+            $postId,
+        ]);
+        $this->redisClient->ltrim("global:timeline", 0, 1000);
+    }
+}
