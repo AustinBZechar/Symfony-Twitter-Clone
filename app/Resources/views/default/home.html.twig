@@ -2,17 +2,12 @@
 
 {% block body %}
     <div id="postform">
-        <form method="POST" action="{#TODO post action#}">
-            {{ app.session.get('username') }}, what you are doing?
-            <br>
-            <table>
-                <tr><td><textarea cols="70" rows="3" name="status"></textarea></td></tr>
-                <tr><td align="right"><input type="submit" name="doit" value="Update"></td></tr>
-            </table>
-        </form>
+        {{ app.session.get('username') }}, what you are doing?
+        <br>
+        {{ form(tweetForm) }}
         <div id="homeinfobox">
-            {#TODO user's followers#} <br>
-            {#TODO user following#} <br>
+            {{ app.session.get('followers', 0) }} followers <br>
+            {{ app.session.get('following', 0) }} following <br>
         </div>
     </div>
 {% endblock %}

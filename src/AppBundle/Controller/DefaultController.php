@@ -24,14 +24,16 @@ class DefaultController extends Controller
     /**
      * @param Request $request
      *
-     * @return Response
+     * @return Response|RedirectResponse
      *
      * @Route("/", name="index")
      */
     public function indexAction(Request $request)
     {
         if ($this->checkIfLoggedIn()) {
-            return $this->render(':default:home.html.twig');
+            return $this->redirectToRoute('home', [
+                'request' => $request,
+            ]);
         }
 
         $registrationTransferObject = new RegistrationTransfer();
@@ -46,7 +48,10 @@ class DefaultController extends Controller
                 $registrationTransferObject->getPassword()
             );
 
-            return $this->generateCookieResponse($authSecret);
+            return $this->redirectToRoute('home', [
+                'request' => $request,
+                'cookie' => $this->generateCookie($authSecret)
+            ]);
         }
 
         if ($loginForm->isSubmitted() && $loginForm->isValid()) {
@@ -55,7 +60,10 @@ class DefaultController extends Controller
                 $loginTransferObject->getPassword()
             );
 
-            return $this->generateCookieResponse($authSecret);
+            return $this->redirectToRoute('home', [
+                'request' => $request,
+                'cookie' => $this->generateCookie($authSecret)
+            ]);
         }
 
         return $this->render(':default:index.html.twig', [
@@ -97,9 +105,9 @@ class DefaultController extends Controller
     /**
      * @param $authSecret
      *
-     * @return Response
+     * @return Cookie
      */
-    private function generateCookieResponse($authSecret)
+    private function generateCookie($authSecret)
     {
         $cookie = new Cookie(
             'auth',
@@ -107,10 +115,7 @@ class DefaultController extends Controller
             new \DateTime(self::HOUR_IN_SECONDS * self::DAY_IN_HOURS * self::YEAR_IN_DAYS)
         );
 
-        $response = new Response($this->renderView(':default:home.html.twig'));
-        $response->headers->setCookie($cookie);
-
-        return $response;
+        return $cookie;
     }
 
     /**
