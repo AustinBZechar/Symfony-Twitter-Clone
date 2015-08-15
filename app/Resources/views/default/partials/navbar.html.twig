@@ -1,6 +1,7 @@
 <div id="navbar">
     <a href="{{ path('index') }}">Home</a>
-    | <a href="{#TODO time-line route#}">Timeline</a>
-    {#TODO chheck if logged in#}
+    | <a href="{{ path('timeline') }}">Timeline</a>
+    {% if app.session.get('userId', null) is not null %}
     | <a href="{{ path('logout') }}">Logout</a>
+    {% endif %}
 </div>

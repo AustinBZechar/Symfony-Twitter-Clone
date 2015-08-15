@@ -3,7 +3,7 @@
 {% block body %}
     <div id="postform">
         <form method="POST" action="{#TODO post action#}">
-            {#TODO username here#}, what you are doing?
+            {{ app.session.get('username') }}, what you are doing?
             <br>
             <table>
                 <tr><td><textarea cols="70" rows="3" name="status"></textarea></td></tr>
