@@ -50,7 +50,7 @@ class DefaultController extends Controller
         }
 
         if ($loginForm->isSubmitted() && $loginForm->isValid()) {
-            $authSecret = $this->get('app.redis.redis_registration')->register(
+            $authSecret = $this->get('app.redis.redis_login')->login(
                 $loginTransferObject->getUsername(),
                 $loginTransferObject->getPassword()
             );
@@ -73,7 +73,7 @@ class DefaultController extends Controller
      */
     public function logoutAction(Request $request)
     {
-        $this->get('app.redis.redis_logout')->logout($request->request->get('userId'));
+        $this->get('app.redis.redis_logout')->logout();
 
         return $this->redirectToRoute('index', [
             'request' => $request,

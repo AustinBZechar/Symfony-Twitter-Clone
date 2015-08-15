@@ -30,11 +30,9 @@ class RedisLogout
         $this->session = $session;
     }
 
-    /**
-     * @param $userId
-     */
-    public function logout($userId)
+    public function logout()
     {
+        $userId = $this->session->get('userId');
         $newAuthSecret = $this->getRand();
         $oldAuthSecret = $this->redisClient->get("uid:$userId:auth");
 
