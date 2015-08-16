@@ -28,7 +28,7 @@ class RedisTweet
     }
 
     /**
-     * @param $status
+     * @param string $status
      */
     public function tweet($status)
     {

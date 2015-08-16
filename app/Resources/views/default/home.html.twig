@@ -6,8 +6,8 @@
         <br>
         {{ form(tweetForm) }}
         <div id="homeinfobox">
-            {{ app.session.get('followers', 0) }} followers <br>
-            {{ app.session.get('following', 0) }} following <br>
+            {{ followers }} followers <br>
+            {{ following }} following <br>
         </div>
     </div>
 {% endblock %}

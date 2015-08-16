@@ -32,6 +32,8 @@ class HomeController extends Controller
 
         $response = new Response($this->renderView(':default:home.html.twig', [
             'tweetForm' => $form->createView(),
+            'followers' => $this->get('app.redis.redis_follow')->getFollowers(),
+            'following' => $this->get('app.redis.redis_follow')->getFollowing(),
         ]));
 
         if ($cookie !== null) {

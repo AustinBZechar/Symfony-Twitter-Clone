@@ -44,7 +44,7 @@ class RedisFollow
     }
 
     /**
-     * @param integer $userId
+     * @param int $userId
      */
     private function unfollow($userId)
     {
@@ -60,7 +60,7 @@ class RedisFollow
     }
 
     /**
-     * @param integer $userId
+     * @param int $userId
      */
     public function followOrUnfollow($userId)
     {
@@ -70,5 +70,21 @@ class RedisFollow
         }
 
         $this->unfollow($userId);
+    }
+
+    /**
+     * @return int
+     */
+    public function getFollowers()
+    {
+        return $this->redisClient->scard("uid:".$this->session->get('userId').":followers");
+    }
+
+    /**
+     * @return int
+     */
+    public function getFollowing()
+    {
+        return $this->redisClient->scard("uid:".$this->session->get('userId').":following");
     }
 }

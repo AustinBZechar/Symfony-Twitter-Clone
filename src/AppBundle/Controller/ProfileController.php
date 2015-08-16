@@ -11,7 +11,7 @@ class ProfileController extends Controller
 {
     /**
      * @param Request $request
-     * @param         $userId
+     * @param int     $userId
      *
      * @return Response
      * @Route("/profile/{userId}", name="profile")
@@ -26,7 +26,7 @@ class ProfileController extends Controller
 
     /**
      * @param Request $request
-     * @param         $userId
+     * @param int     $userId
      *
      * @return Response
      * @Route("/follow/{userId}", name="follow")

@@ -34,7 +34,7 @@ class RedisRegistration
     /**
      * @param $username
      *
-     * @return boolean
+     * @return bool
      */
     private function checkIfUsernameExists($username)
     {
