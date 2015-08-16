@@ -1,0 +1,7 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+    {#TODO create twig service to convert userId to username#}
+    <h2 class="username">Profile {{ app.session.get('username') }}</h2>
+    <a href="{{ path('follow', {'userId':userId}) }}" class="button">Follow</a>
+    {# TODO showUserPostsWithPagination(gt("u"),$userid,$start,10);#}
+{% endblock %}

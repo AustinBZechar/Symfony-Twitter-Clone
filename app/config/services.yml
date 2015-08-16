@@ -16,3 +16,7 @@ services:
   app.redis.redis_tweet:
       class: AppBundle\Redis\RedisTweet
       arguments: [ @snc_redis.default_client, @session ]
+
+  app.redis.redis_follow:
+      class: AppBundle\Redis\RedisFollow
+      arguments: [ @snc_redis.default_client, @session ]
