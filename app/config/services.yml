@@ -20,3 +20,11 @@ services:
   app.redis.redis_follow:
       class: AppBundle\Redis\RedisFollow
       arguments: [ @snc_redis.default_client, @session ]
+
+  app.twig.username_converter_extension:
+      class: AppBundle\Twig\UsernameConverterExtension
+      arguments: [ @snc_redis.default_client ]
+      calls:
+          - [ initRuntime, [ @twig ] ]
+      tags:
+          - { name: twig.extension }

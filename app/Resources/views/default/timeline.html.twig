@@ -3,7 +3,7 @@
     <h2>Timeline</h2>
     <i>Latest registered users (an example of SORT command!)</i><br>
     {% for user in lastUsers %}
-        <a class="username" href="{{ path('profile', {'userId': user}) }}">{#TODO add username#}Username {{ user }}</a> <br>
+        <a class="username" href="{{ path('profile', {'userId': user}) }}">{{ username_converter(user) }}</a> <br>
     {% endfor %}
     <i>Latest 50 messages from users around the world!</i><br>
     {% for tweet in tweets %}
