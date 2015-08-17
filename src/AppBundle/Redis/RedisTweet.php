@@ -57,13 +57,28 @@ class RedisTweet
     }
 
     /**
+     * @param int $userId
+     *
      * @return array
      */
-    public function showUserPosts()
+    public function showUserPosts($userId)
     {
-        $userId = $this->session->get('userId');
-        $key = ($userId == -1) ? "global:timeline" : "uid:$userId:posts";
-        // TODO maybe use start & count or do ajax call and increase start and count
+        $key =  "uid:$userId:posts";
+        $posts = $this->redisClient->lrange($key, 0, 10);
+        $postData = [];
+        foreach ($posts as $post) {
+            $postData[] = $this->redisClient->get("post:$post");
+        }
+
+        return $postData;
+    }
+
+    /**
+     * @return array
+     */
+    public function showAllPosts()
+    {
+        $key =  "global:timeline";
         $posts = $this->redisClient->lrange($key, 0, 10);
         $postData = [];
         foreach ($posts as $post) {

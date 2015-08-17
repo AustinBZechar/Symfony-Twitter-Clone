@@ -19,7 +19,7 @@ class ProfileController extends Controller
     public function profileAction(Request $request, $userId)
     {
         return $this->render(':default:profile.html.twig', [
-            'tweets' => $this->get('app.redis.redis_tweet')->showUserPosts(),
+            'tweets' => $this->get('app.redis.redis_tweet')->showUserPosts($userId),
             'userId' => $userId,
         ]);
     }
@@ -36,7 +36,7 @@ class ProfileController extends Controller
         $this->get('app.redis.redis_follow')->followOrUnfollow($userId);
 
         return $this->render(':default:profile.html.twig', [
-            'tweets' => $this->get('app.redis.redis_tweet')->showUserPosts(),
+            'tweets' => $this->get('app.redis.redis_tweet')->showUserPosts($userId),
             'userId' => $userId,
         ]);
     }
