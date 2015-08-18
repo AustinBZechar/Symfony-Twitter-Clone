@@ -34,7 +34,7 @@ class RedisTweet
     {
         $postId = $this->redisClient->incr("global:nextPostId");
         $userId = $this->session->get('userId');
-        $post = $userId."|".time()."|".$status;
+        $post = $userId."|".(new \DateTime())->format('d/m/y')."|".$status;
         $this->redisClient->set("post:$postId", $post);
         $followers = $this->redisClient->smembers("uid:".$userId.":followers");
         if ($followers === false) {

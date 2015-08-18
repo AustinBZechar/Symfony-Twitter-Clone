@@ -4,19 +4,17 @@ namespace AppBundle\Controller;
 
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 class ProfileController extends Controller
 {
     /**
-     * @param Request $request
-     * @param int     $userId
+     * @param int $userId
      *
      * @return Response
      * @Route("/profile/{userId}", name="profile")
      */
-    public function profileAction(Request $request, $userId)
+    public function profileAction($userId)
     {
         return $this->render(':default:profile.html.twig', [
             'tweets' => $this->get('app.redis.redis_tweet')->showUserPosts($userId),
@@ -25,19 +23,16 @@ class ProfileController extends Controller
     }
 
     /**
-     * @param Request $request
-     * @param int     $userId
+     * @param int $userId
      *
      * @return Response
      * @Route("/follow/{userId}", name="follow")
      */
-    // TODO do this as ajax
-    public function followAction(Request $request, $userId)
+    public function followAction($userId)
     {
         $this->get('app.redis.redis_follow')->followOrUnfollow($userId);
 
-        return $this->render(':default:profile.html.twig', [
-            'tweets' => $this->get('app.redis.redis_tweet')->showUserPosts($userId),
+        return $this->redirectToRoute('profile', [
             'userId' => $userId,
         ]);
     }
