@@ -17,6 +17,7 @@ class TweetType extends AbstractType
         $builder
             ->add('status', 'textarea', [
                 'attr' => [
+                    // TODO Here shouldn't be hardcoded values. Put it in an interface.
                     'cols' => 70,
                     'rows' => 3,
                 ]
