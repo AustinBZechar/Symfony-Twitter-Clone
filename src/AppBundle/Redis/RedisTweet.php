@@ -41,18 +41,17 @@ class RedisTweet
             $followers = [];
         }
 
-        $followers[] = $userId; /* Add the post to our own posts too */
+        $followers[] = $userId;
 
         foreach ($followers as $fid) {
             $this->redisClient->lpush("uid:$fid:posts", [
                 $postId,
             ]);
         }
-        # Push the post on the timeline, and trim the timeline to the
-        # newest 1000 elements.
         $this->redisClient->lpush("global:timeline", [
             $postId,
         ]);
+
         $this->redisClient->ltrim("global:timeline", 0, 1000);
     }
 

@@ -18,6 +18,11 @@ class RedisFollow
     private $session;
 
     /**
+     * @var string
+     */
+    private $sessionUserId;
+
+    /**
      * @param Client $redisClient
      * @param Session $session
      */
@@ -25,6 +30,7 @@ class RedisFollow
     {
         $this->redisClient = $redisClient;
         $this->session = $session;
+        $this->sessionUserId = $this->session->get('userId');
     }
 
     /**
@@ -32,15 +38,12 @@ class RedisFollow
      */
     private function follow($userId)
     {
-        $sessionUserId = $this->session->get('userId');
-        if ($userId != $sessionUserId) {
-            $this->redisClient->sadd("uid:".$userId.":followers", [
-                $sessionUserId,
-            ]);
-            $this->redisClient->sadd("uid:".$sessionUserId.":following", [
-                $userId,
-            ]);
-        }
+        $this->redisClient->sadd("uid:".$userId.":followers", [
+            $this->sessionUserId,
+        ]);
+        $this->redisClient->sadd("uid:".$this->sessionUserId.":following", [
+            $userId,
+        ]);
     }
 
     /**
@@ -48,15 +51,12 @@ class RedisFollow
      */
     private function unfollow($userId)
     {
-        $sessionUserId = $this->session->get('userId');
-        if ($userId != $sessionUserId) {
-            $this->redisClient->srem("uid:".$userId.":followers", [
-                $sessionUserId,
-            ]);
-            $this->redisClient->srem("uid:".$sessionUserId.":following", [
-                $userId,
-            ]);
-        }
+        $this->redisClient->srem("uid:".$userId.":followers", [
+            $this->sessionUserId,
+        ]);
+        $this->redisClient->srem("uid:".$this->sessionUserId.":following", [
+            $userId,
+        ]);
     }
 
     /**
@@ -64,12 +64,14 @@ class RedisFollow
      */
     public function followOrUnfollow($userId)
     {
-        $sessionUserId = $this->session->get('userId');
-        if ($this->redisClient->sismember("uid:".$sessionUserId.":following", $userId) === 1) {
-            $this->follow($userId);
+        if ($this->sessionUserId === $userId) {
+            return;
         }
-
-        $this->unfollow($userId);
+        if (!$this->redisClient->sismember("uid:".$this->sessionUserId.":following", $userId)) {
+            $this->follow($userId);
+        } else {
+            $this->unfollow($userId);
+        }
     }
 
     /**
@@ -77,7 +79,7 @@ class RedisFollow
      */
     public function getFollowers()
     {
-        return $this->redisClient->scard("uid:".$this->session->get('userId').":followers");
+        return $this->redisClient->scard("uid:".$this->sessionUserId.":followers");
     }
 
     /**
@@ -85,6 +87,6 @@ class RedisFollow
      */
     public function getFollowing()
     {
-        return $this->redisClient->scard("uid:".$this->session->get('userId').":following");
+        return $this->redisClient->scard("uid:".$this->sessionUserId.":following");
     }
 }

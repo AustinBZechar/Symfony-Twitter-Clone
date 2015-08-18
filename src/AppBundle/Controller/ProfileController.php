@@ -31,6 +31,7 @@ class ProfileController extends Controller
      * @return Response
      * @Route("/follow/{userId}", name="follow")
      */
+    // TODO do this as ajax
     public function followAction(Request $request, $userId)
     {
         $this->get('app.redis.redis_follow')->followOrUnfollow($userId);

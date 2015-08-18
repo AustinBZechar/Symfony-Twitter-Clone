@@ -8,6 +8,9 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class TweetType extends AbstractType
 {
+    const TEXTAREA_COLUMN_SIZE = 70;
+    const TEXTAREA_ROW_SIZE    = 3;
+
     /**
      * @param FormBuilderInterface $builder
      * @param array $options
@@ -17,9 +20,8 @@ class TweetType extends AbstractType
         $builder
             ->add('status', 'textarea', [
                 'attr' => [
-                    // TODO Here shouldn't be hardcoded values. Put it in an interface.
-                    'cols' => 70,
-                    'rows' => 3,
+                    'cols' => self::TEXTAREA_COLUMN_SIZE,
+                    'rows' => self::TEXTAREA_ROW_SIZE,
                 ]
             ])
             ->add('Update', 'submit');
