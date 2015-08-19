@@ -35,6 +35,9 @@ framework:
 twig:
     debug:            "%kernel.debug%"
     strict_variables: "%kernel.debug%"
+    globals:
+        tutorial_site: "http://krunoknego.com"
+        redis_site: "redis.io"
 
 # Assetic Configuration
 assetic:
